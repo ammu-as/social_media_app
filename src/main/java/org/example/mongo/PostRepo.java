@@ -29,4 +29,12 @@ public class PostRepo {
         posts.find().sort(new Document("createdAt", -1)).limit(limit).into(out);
         return out;
     }
+
+    public List<Document> findByAuthors(List<Integer> userIds, int limit) {
+        List<Document> out = new ArrayList<>();
+        if (userIds == null || userIds.isEmpty()) return out;
+        Document filter = new Document("userId", new Document("$in", userIds));
+        posts.find(filter).sort(new Document("createdAt", -1)).limit(limit).into(out);
+        return out;
+    }
 }

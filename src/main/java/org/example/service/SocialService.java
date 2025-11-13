@@ -20,9 +20,21 @@ public class SocialService {
         return postRepo.findRecent(limit);
     }
 
+    public List<Document> getFeedByAuthors(List<Integer> userIds, int limit) {
+        return postRepo.findByAuthors(userIds, limit);
+    }
+
     public void addComment(Document c) { commentRepo.insertComment(c); }
 
     public boolean addLike(Document l) { return likeRepo.insertLike(l); }
 
     public void removeLike(Document filter) { likeRepo.removeLike(filter); }
+
+    public long countLikesForPost(org.bson.types.ObjectId postId) {
+        return likeRepo.countLikesForPost(postId);
+    }
+
+    public long countCommentsForPost(org.bson.types.ObjectId postId) {
+        return commentRepo.countByPost(postId);
+    }
 }

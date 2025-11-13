@@ -26,4 +26,16 @@ public class SessionDao {
             ps.executeUpdate();
         }
     }
+
+    public Integer getUserIdBySession(String sessionId) throws SQLException {
+        String sql = "SELECT user_id FROM sessions WHERE session_id = ? AND is_active = 1";
+        try (Connection c = DBConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, sessionId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1);
+                return null;
+            }
+        }
+    }
 }

@@ -14,4 +14,9 @@ public class FriendService {
         try { friendsDao.unfollow(followerId, followeeId); }
         catch (Exception e) { throw new RuntimeException(e); }
     }
+
+    public java.util.List<Integer> listFollowees(int followerId) {
+        try { return friendsDao.findFollowees(followerId); }
+        catch (Exception e) { throw new RuntimeException(e); }
+    }
 }

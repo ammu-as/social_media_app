@@ -85,4 +85,14 @@ public class UserDao {
         }
         return null;
     }
+
+    public void updatePassword(int userId, String newHash) throws SQLException {
+        String sql = "UPDATE users SET hash_password = ? WHERE user_id = ?";
+        try (Connection c = DBConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, newHash);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        }
+    }
 }

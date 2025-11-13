@@ -42,6 +42,7 @@ public class AuthService {
             throw new Exception("Invalid credentials");
         }
         String token = generateToken();
+        loginService.record(createLogin(u.getUserId(), usernameOrEmail, ip, ua, "SUCCESS", null));
         // create session
         org.example.model.Session s = new org.example.model.Session();
         s.setSessionId(token);

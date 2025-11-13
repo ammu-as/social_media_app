@@ -5,6 +5,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Indexes;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.example.config.MongoProvider;
 
 public class LikeRepo {
@@ -28,5 +29,10 @@ public class LikeRepo {
 
     public void removeLike(Document filter) {
         likes.deleteOne(filter);
+    }
+
+    public long countLikesForPost(ObjectId postId) {
+        Document filter = new Document("targetType", "post").append("targetId", postId);
+        return likes.countDocuments(filter);
     }
 }

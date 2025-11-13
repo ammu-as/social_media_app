@@ -3,6 +3,7 @@ package org.example.mongo;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.example.config.MongoProvider;
 
 import java.util.ArrayList;
@@ -22,5 +23,9 @@ public class CommentRepo {
         List<Document> out = new ArrayList<>();
         comments.find(new Document("postId", postId)).sort(new Document("createdAt", 1)).into(out);
         return out;
+    }
+
+    public long countByPost(ObjectId postId) {
+        return comments.countDocuments(new Document("postId", postId));
     }
 }

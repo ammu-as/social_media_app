@@ -18,4 +18,9 @@ public class SessionService {
     public void invalidate(String sessionId) {
         try { sessionsDao.invalidate(sessionId); } catch (Exception e) { throw new RuntimeException(e); }
     }
+
+    public Integer getUserId(String sessionId) {
+        try { return sessionsDao.getUserIdBySession(sessionId); }
+        catch (Exception e) { throw new RuntimeException(e); }
+    }
 }
