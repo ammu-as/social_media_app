@@ -9,6 +9,8 @@ public class LoginService {
     public void record(Login login) {
         try {
             loginDao.recordLogin(login.getUserId(), login.getUsernameAttempted(), login.getIpAddress(), login.getUserAgent(), login.getLoginStatus(), login.getReason());
-        } catch (Exception e) { throw new RuntimeException(e); }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

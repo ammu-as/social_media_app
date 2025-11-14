@@ -15,17 +15,26 @@ public class UserService {
     }
 
     public user findByUsername(String username) {
-        try { return userDao.findByUsername(username); }
-        catch (Exception e) { throw new RuntimeException(e); }
+        try {
+            return userDao.findByUsername(username);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public user findByEmail(String email) {
-        try { return userDao.findByEmail(email); }
-        catch (Exception e) { throw new RuntimeException(e); }
+        try {
+            return userDao.findByEmail(email);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public user findById(int id) {
-        try { return userDao.findById(id); }
-        catch (Exception e) { throw new RuntimeException(e); }
+        try {
+            return userDao.findById(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

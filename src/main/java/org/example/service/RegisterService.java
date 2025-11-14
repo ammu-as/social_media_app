@@ -9,6 +9,8 @@ public class RegisterService {
     public void record(Register reg) {
         try {
             registerDao.recordRegister(reg.getUserId(), reg.getMethod(), reg.getIpAddress(), reg.getReferrer());
-        } catch (Exception e) { throw new RuntimeException(e); }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

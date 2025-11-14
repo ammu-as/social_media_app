@@ -4,7 +4,8 @@ import org.example.dao.RolesDao;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedConstruction;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class RoleServiceTest {

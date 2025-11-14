@@ -4,7 +4,8 @@ import org.example.dao.FriendDao;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedConstruction;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 class FriendServiceTest {

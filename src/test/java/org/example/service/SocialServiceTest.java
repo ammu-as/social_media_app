@@ -1,14 +1,14 @@
 package org.example.service;
 
 import org.bson.Document;
-import org.example.mongo.PostRepo;
 import org.example.mongo.CommentRepo;
 import org.example.mongo.LikeRepo;
+import org.example.mongo.PostRepo;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedConstruction;
 
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -20,9 +20,9 @@ class SocialServiceTest {
         Document p = new Document("a", 1);
         List<Document> feed = Arrays.asList(new Document("x", 1));
         try (MockedConstruction<PostRepo> post = mockConstruction(PostRepo.class, (m, c) -> {
-                 when(m.insertPost(p)).thenReturn(p);
-                 when(m.findRecent(10)).thenReturn(feed);
-             })) {
+            when(m.insertPost(p)).thenReturn(p);
+            when(m.findRecent(10)).thenReturn(feed);
+        })) {
             SocialService svc = new SocialService();
             assertSame(p, svc.createPost(p));
             assertEquals(feed, svc.getFeed(10));

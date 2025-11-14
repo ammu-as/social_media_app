@@ -17,7 +17,9 @@ public class CommentRepo {
         comments = db.getCollection("comments");
     }
 
-    public void insertComment(Document c) { comments.insertOne(c); }
+    public void insertComment(Document c) {
+        comments.insertOne(c);
+    }
 
     public List<Document> findByPost(Object postId) {
         List<Document> out = new ArrayList<>();

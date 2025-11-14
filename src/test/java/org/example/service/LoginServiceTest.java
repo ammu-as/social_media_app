@@ -5,7 +5,7 @@ import org.example.model.Login;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedConstruction;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class LoginServiceTest {

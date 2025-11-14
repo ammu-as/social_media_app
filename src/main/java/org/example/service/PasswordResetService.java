@@ -6,8 +6,6 @@ import org.example.model.user;
 import org.example.util.PasswordUtil;
 
 import java.security.SecureRandom;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Base64;
 
 public class PasswordResetService {
@@ -21,10 +19,11 @@ public class PasswordResetService {
             if (u == null) u = userService.findByEmail(usernameOrEmail);
             if (u == null) throw new RuntimeException("user not found");
             String token = generateToken();
-            LocalDateTime exp = LocalDateTime.now().plusMinutes(15);
-            resetDao.createToken(u.getUserId(), token, Timestamp.valueOf(exp));
+            resetDao.createToken(u.getUserId(), token);
             return token;
-        } catch (Exception e) { throw new RuntimeException(e); }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void resetWithToken(String token, String newPassword) {
@@ -34,7 +33,9 @@ public class PasswordResetService {
             String hash = PasswordUtil.hash(newPassword);
             userDao.updatePassword(userId, hash);
             resetDao.deleteToken(token);
-        } catch (Exception e) { throw new RuntimeException(e); }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private String generateToken() {
@@ -42,5 +43,5 @@ public class PasswordResetService {
         byte[] b = new byte[32];
         rnd.nextBytes(b);
         return Base64.getUrlEncoder().withoutPadding().encodeToString(b);
-        }
+    }
 }

@@ -1,14 +1,9 @@
 package org.example;
 
 import org.bson.Document;
-import org.example.config.MongoProvider;
-import org.example.service.AuthService;
-import org.example.service.FriendService;
-import org.example.service.SocialService;
-import org.example.service.SessionService;
-import org.example.service.UserService;
-import org.example.service.PasswordResetService;
 import org.bson.types.ObjectId;
+import org.example.config.MongoProvider;
+import org.example.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +13,7 @@ import java.util.Scanner;
 
 public class Main {
     private static final Logger log = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) throws Exception {
         AuthService auth = new AuthService();
         SocialService social = new SocialService();
@@ -33,9 +29,7 @@ public class Main {
         printBanner();
         while (true) {
             log.info("");
-            log.info("========================================");
-            log.info(String.format("%-20s %s", "SOCIAL_MEDIA", (currentUserId>0? ("Logged in as: "+currentUsername+" ("+currentUserId+")"):"[Not logged in]")));
-            log.info("========================================");
+            log.info(String.format("%-20s %s", "SOCIAL_MEDIA", (currentUserId > 0 ? ("Logged in as: " + currentUsername + " (" + currentUserId + ")") : "[Not logged in]")));
             if (currentUserId <= 0) {
                 log.info("1) Register            3) Request Password Reset");
                 log.info("2) Login               4) Reset Password (token)");
@@ -46,15 +40,20 @@ public class Main {
                 try {
                     switch (opt) {
                         case "1" -> {
-                            System.out.print("username: "); String u = sc.nextLine();
-                            System.out.print("email: "); String e = sc.nextLine();
-                            System.out.print("password: "); String p = sc.nextLine();
+                            System.out.print("username: ");
+                            String u = sc.nextLine();
+                            System.out.print("email: ");
+                            String e = sc.nextLine();
+                            System.out.print("password: ");
+                            String p = sc.nextLine();
                             int id = auth.register(u, e, p);
                             log.info("Registered user id: {}", id);
                         }
                         case "2" -> {
-                            System.out.print("username/email: "); String uname = sc.nextLine();
-                            System.out.print("password: "); String pwd = sc.nextLine();
+                            System.out.print("username/email: ");
+                            String uname = sc.nextLine();
+                            System.out.print("password: ");
+                            String pwd = sc.nextLine();
                             String token = auth.login(uname, pwd, "127.0.0.1", "cli");
                             log.info("Login success. token: {}", token);
                             currentToken = token;
@@ -62,19 +61,22 @@ public class Main {
                             currentUserId = uid == null ? -1 : uid;
                             if (currentUserId > 0) {
                                 org.example.model.user u = userService.findById(currentUserId);
-                                currentUsername = u != null ? u.getUsername() : ("user-"+currentUserId);
+                                currentUsername = u != null ? u.getUsername() : ("user-" + currentUserId);
                                 log.info("Welcome, {}!", currentUsername);
                             }
                         }
                         case "3" -> {
-                            System.out.print("enter username or email: "); String ue = sc.nextLine();
+                            System.out.print("enter username or email: ");
+                            String ue = sc.nextLine();
                             String resetToken = resetService.requestReset(ue);
                             log.info("Password reset token (demo): {}", resetToken);
                             log.info("Use option 4 with this token to set a new password.");
                         }
                         case "4" -> {
-                            System.out.print("reset token: "); String t = sc.nextLine();
-                            System.out.print("new password: "); String np = sc.nextLine();
+                            System.out.print("reset token: ");
+                            String t = sc.nextLine();
+                            System.out.print("new password: ");
+                            String np = sc.nextLine();
                             resetService.resetWithToken(t, np);
                             log.info("Password updated. You can now login with the new password.");
                         }
@@ -118,7 +120,8 @@ public class Main {
                             }
                         }
                         case "3" -> {
-                            System.out.print("content: "); String content = sc.nextLine();
+                            System.out.print("content: ");
+                            String content = sc.nextLine();
                             Document p = new Document()
                                     .append("userId", currentUserId)
                                     .append("username", currentUsername)
@@ -128,12 +131,14 @@ public class Main {
                             log.info("Post created.");
                         }
                         case "4" -> {
-                            System.out.print("follow user id: "); int followee = Integer.parseInt(sc.nextLine());
+                            System.out.print("follow user id: ");
+                            int followee = Integer.parseInt(sc.nextLine());
                             boolean ok = friendService.follow(currentUserId, followee);
                             log.info(ok ? "Now following" : "Already following / error");
                         }
                         case "5" -> {
-                            System.out.print("post id to like: "); String pid = sc.nextLine();
+                            System.out.print("post id to like: ");
+                            String pid = sc.nextLine();
                             Document like = new Document()
                                     .append("targetType", "post")
                                     .append("targetId", new ObjectId(pid))
@@ -143,8 +148,10 @@ public class Main {
                             log.info(ok ? "Liked." : "Already liked or error.");
                         }
                         case "6" -> {
-                            System.out.print("post id to comment: "); String pid = sc.nextLine();
-                            System.out.print("comment text: "); String text = sc.nextLine();
+                            System.out.print("post id to comment: ");
+                            String pid = sc.nextLine();
+                            System.out.print("comment text: ");
+                            String text = sc.nextLine();
                             Document c = new Document()
                                     .append("postId", new ObjectId(pid))
                                     .append("userId", currentUserId)
@@ -167,14 +174,10 @@ public class Main {
                 }
             }
         }
-
         MongoProvider.close();
         log.info("bye");
     }
-
     private static void printBanner() {
-        log.info("========================================");
         log.info("        WELCOME TO SOCIAL_MEDIA        ");
-        log.info("========================================");
     }
 }

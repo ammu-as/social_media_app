@@ -24,11 +24,17 @@ public class SocialService {
         return postRepo.findByAuthors(userIds, limit);
     }
 
-    public void addComment(Document c) { commentRepo.insertComment(c); }
+    public void addComment(Document c) {
+        commentRepo.insertComment(c);
+    }
 
-    public boolean addLike(Document l) { return likeRepo.insertLike(l); }
+    public boolean addLike(Document l) {
+        return likeRepo.insertLike(l);
+    }
 
-    public void removeLike(Document filter) { likeRepo.removeLike(filter); }
+    public void removeLike(Document filter) {
+        likeRepo.removeLike(filter);
+    }
 
     public long countLikesForPost(org.bson.types.ObjectId postId) {
         return likeRepo.countLikesForPost(postId);

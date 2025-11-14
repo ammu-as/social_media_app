@@ -5,7 +5,6 @@ import org.example.model.user;
 import org.example.util.PasswordUtil;
 
 import java.security.SecureRandom;
-import java.sql.Timestamp;
 import java.util.Base64;
 
 public class AuthService {

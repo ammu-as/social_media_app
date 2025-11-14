@@ -1,9 +1,9 @@
 package org.example.service;
 
 import org.example.model.Login;
-import org.example.model.user;
-import org.example.model.Session;
 import org.example.model.Register;
+import org.example.model.Session;
+import org.example.model.user;
 import org.example.util.PasswordUtil;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedConstruction;
@@ -17,10 +17,10 @@ class AuthServiceTest {
     @Test
     void register_success_createsUser_and_recordsRegister() throws Exception {
         try (MockedConstruction<UserService> userSvcMock = mockConstruction(UserService.class, (mock, ctx) -> {
-                 when(mock.findByUsername("alice")).thenReturn(null);
-                 when(mock.findByEmail("a@b.com")).thenReturn(null);
-                 when(mock.createUser(any(user.class))).thenReturn(101);
-             });
+            when(mock.findByUsername("alice")).thenReturn(null);
+            when(mock.findByEmail("a@b.com")).thenReturn(null);
+            when(mock.createUser(any(user.class))).thenReturn(101);
+        });
              MockedConstruction<RegisterService> regSvcMock = mockConstruction(RegisterService.class);
              MockedStatic<PasswordUtil> pwd = mockStatic(PasswordUtil.class)) {
 
@@ -65,9 +65,9 @@ class AuthServiceTest {
         u.setUserId(5);
         u.setHashPassword("HASH");
         try (MockedConstruction<UserService> userSvcMock = mockConstruction(UserService.class, (mock, ctx) -> {
-                 when(mock.findByUsername("alice")).thenReturn(null);
-                 when(mock.findByEmail("alice")).thenReturn(u);
-             });
+            when(mock.findByUsername("alice")).thenReturn(null);
+            when(mock.findByEmail("alice")).thenReturn(u);
+        });
              MockedConstruction<LoginService> loginSvcMock = mockConstruction(LoginService.class);
              MockedConstruction<SessionService> sessionSvcMock = mockConstruction(SessionService.class);
              MockedStatic<PasswordUtil> pwd = mockStatic(PasswordUtil.class)) {
@@ -91,9 +91,9 @@ class AuthServiceTest {
     void login_fails_when_no_user_or_bad_password() throws Exception {
         // no user found
         try (MockedConstruction<UserService> userSvcMock = mockConstruction(UserService.class, (mock, ctx) -> {
-                 when(mock.findByUsername("x")).thenReturn(null);
-                 when(mock.findByEmail("x")).thenReturn(null);
-             });
+            when(mock.findByUsername("x")).thenReturn(null);
+            when(mock.findByEmail("x")).thenReturn(null);
+        });
              MockedConstruction<LoginService> loginSvcMock = mockConstruction(LoginService.class)) {
             AuthService svc = new AuthService();
             assertThrows(Exception.class, () -> svc.login("x", "p", "ip", "ua"));
@@ -104,8 +104,8 @@ class AuthServiceTest {
         u.setUserId(5);
         u.setHashPassword("HASH");
         try (MockedConstruction<UserService> userSvcMock = mockConstruction(UserService.class, (mock, ctx) -> {
-                 when(mock.findByUsername("a")).thenReturn(u);
-             });
+            when(mock.findByUsername("a")).thenReturn(u);
+        });
              MockedConstruction<LoginService> loginSvcMock = mockConstruction(LoginService.class);
              MockedStatic<PasswordUtil> pwd = mockStatic(PasswordUtil.class)) {
             pwd.when(() -> PasswordUtil.verify("bad", "HASH")).thenReturn(false);

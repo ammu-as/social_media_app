@@ -2,7 +2,10 @@ package org.example.dao;
 
 import org.example.config.DBConnection;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Types;
 
 public class LoginDao {
     public void recordLogin(Integer userId, String usernameAttempted, String ip, String userAgent, String status, String reason) throws SQLException {
